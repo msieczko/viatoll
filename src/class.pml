@@ -1,43 +1,59 @@
 @startuml
+
+hide empty members
+hide circle
+skinparam linetype ortho
+
 class Użytkownik {
-    imię
-    nazwisko
-    PESEL
-    adres korespondencyjny
-    stan konta
+    imię : String
+    nazwisko : String
+    PESEL : String
+    adres korespondencyjny : String
+    saldo konta : Number
 }
 
 class ViaGate {
-    nr seryjny
-    lokalizacja
-    typ drogi
-    typ bramki
+    nr seryjny : String
+    lokalizacja : String
+    typ drogi : String
+    typ bramki : String
 }
 
 class Przejazd {
-    czas rozpoczęcia
-    czas zakończenia
+    czas rozpoczęcia : Number
+    czas zakończenia : Number
+    długość trasy : Number
+    opłata : Number
+}
+
+class Odcinek {
+    długość : Number
+    opłata : Number
 }
 
 class OdczytBramki {
-    czas odczytu
+    czas odczytu : Date
 }
 
 class ViaAuto {
-    nr seryjny
-    data rejestracji
-    typ pojazdu
+    nr seryjny : String
+    data rejestracji : Date
+    typ pojazdu : String
 }
 
 class Faktura {
-    kwota
+    kwota do zapłaty : Number
+    data wystawienia : Date
+    termin płatności : Date
+    data płatności : Date
 }
 
-Użytkownik o--"*" ViaAuto : posiada
-OdczytBramki o-- ViaGate : dotyczy
-OdczytBramki "*"-- ViaAuto : dotyczy
-Przejazd o--"*" OdczytBramki : składa się z
-Faktura o--"*" Przejazd
-
+Faktura "1" o-d- "1..*" Przejazd : > podlicza
+Faktura "*" -r- "1" Użytkownik : > zobowiązuje\ndo zapłaty
+Użytkownik "1" o-r- "*" ViaAuto : > posiada
+Przejazd *-r- "1..*" Odcinek : > składa się z
+Odcinek "0..2" o-r- "2" OdczytBramki : > składa się z
+OdczytBramki "*" -r- "1" ViaGate : > dotyczy
+OdczytBramki "*" -u- "1" ViaAuto : > dotyczy
 
 @enduml
