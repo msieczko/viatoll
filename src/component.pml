@@ -28,22 +28,23 @@ interface "Statystyki" as I6
 interface "Zarządzanie\nużytkownikami" as I7
 interface "Założenie konta" as I8
 
-PA --( I1
-PA --( I2
-PA --( I6
-PA --( I7
-I1 -- M1
-I2 -- M2
-I6 -- M3
-I7 -- M5
-M1 -- I3
-M2 -- I4
-I3 )-- SK
-I4 )-- SK
+I1 )-- PA
+I2 )-- PA
+I6 )-- PA
+I7 )-- PA
+M1 -- I1
+M2 -- I2
+M3 -- I6
+M5 -- I7
+I3 -- M1
+I4 -- M2
+SK --( I3
+SK --( I4
 M4 -- I5
 I5 )-- M3
-M5 -- I8
-I8 )-- SK
+I8 -- M5
+SK --( I8
+
 @enduml
 
 
